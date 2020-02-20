@@ -60,7 +60,7 @@ namespace V2_myPrivateFinance.Views
         {
             if (ValidateChildren(ValidationConstraints.ImmediateChildren))
             {
-                if (IsPaymentsumGetNegative(isIncome))
+                if (!IsPaymentsumGetNegative(isIncome))
                 {
                     payment.Description = textBox1.Text;
                     payment.Amount = Math.Round(Convert.ToDouble(nbrAmount.Value) * 20) / 20;
@@ -86,11 +86,11 @@ namespace V2_myPrivateFinance.Views
 
         private bool IsPaymentsumGetNegative(bool isIncome)
         {
-            if (isIncome && (DataAccess.GetPaymentSum() - Convert.ToDouble(nbrAmount.Value)) >= 0)
+            if (isIncome || (DataAccess.GetPaymentSum() - Convert.ToDouble(nbrAmount.Value)) >= 0)
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
         private void textBox1_Validating(object sender, CancelEventArgs e)

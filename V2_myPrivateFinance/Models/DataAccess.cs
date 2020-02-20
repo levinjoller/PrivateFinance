@@ -131,11 +131,49 @@ namespace V2_myPrivateFinance.Models
 
         public static void DeletePayment(Payment p)
         {
-            CheckConnection();
-            string query = "DELETE Payments WHERE Id=@Id";
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.Parameters.AddWithValue("@Id", p.Id);
-            cmd.ExecuteNonQuery();
+            try
+            {
+                CheckConnection();
+                string query = "DELETE Payments WHERE Id=@Id";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@Id", p.Id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        public static void AddCategory(Category c)
+        {
+            try
+            {
+                CheckConnection();
+                string query = "INSERT Categories Values(@N)";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@N", c.Name);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+        public static void DeleteCategory(Category c)
+        {
+            try
+            {
+                CheckConnection();
+                string query = "DELETE Categories WHERE Id=@Id";
+                SqlCommand cmd = new SqlCommand(query, con);
+                cmd.Parameters.AddWithValue("@Id", c.Id);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
     }
 }

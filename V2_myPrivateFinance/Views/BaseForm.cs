@@ -30,5 +30,32 @@ namespace V2_myPrivateFinance.Views
                 af.ShowDialog();
             }
         }
+
+        private void manageCategoriesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Application.OpenForms["ManageCategory"] == null)
+            {
+                ManageCategoy mc = new ManageCategoy();
+                mc.ShowDialog();
+            }
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Application.OpenForms["ExportForm"] == null)
+            {
+                ExportForm ef = new ExportForm();
+                ef.ShowDialog();
+            }
+        }
+
+        private void statisticsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Application.OpenForms["StatisticsForm"] == null)
+            {
+                StatisticsForm st = new StatisticsForm();
+                st.ShowDialog();
+            }
+        }
     }
 }

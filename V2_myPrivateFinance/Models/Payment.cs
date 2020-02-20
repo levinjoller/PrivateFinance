@@ -17,5 +17,12 @@ namespace V2_myPrivateFinance.Models
         [Browsable(false)]
         public bool IsIncome { get; set; }
         public Category Category { get; set; }
+
+        public string Export()
+        {
+            string d = Description.Replace("\"", "\"\"");
+            string c = Category.Name.Replace("\"", "\"\"");
+            return $"{Id}, {c}, {d}, {Date.ToShortDateString()}, {(IsIncome ? Amount : Amount * -1).ToString("F2").Replace(",", ".")}";
+        }
     }
 }
