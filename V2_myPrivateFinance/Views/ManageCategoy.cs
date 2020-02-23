@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using V2_myPrivateFinance.Models;
 
 namespace V2_myPrivateFinance.Views
 {
-    public partial class ManageCategoy : V2_myPrivateFinance.Views.BaseForm
+    public partial class ManageCategoy : BaseForm
     {
-        BindingList<Category> categories = new BindingList<Category>();
+        List<Category> categories = new List<Category>();
         public ManageCategoy()
         {
             InitializeComponent();
@@ -28,7 +23,7 @@ namespace V2_myPrivateFinance.Views
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(textBox1.Text) && new List<Category>(categories).Find(c => c.Name == textBox1.Text) == null)
+            if (!string.IsNullOrWhiteSpace(textBox1.Text) && categories.Find(c => c.Name == textBox1.Text) == null)
             {
                 Category category = new Category()
                 {
@@ -43,7 +38,7 @@ namespace V2_myPrivateFinance.Views
         {
             if (lbCategories.SelectedItem != null)
             {
-                List<Payment> payments =  new List<Payment>(DataAccess.GetPayments());
+                List<Payment> payments =  DataAccess.GetPayments();
                 if (!payments.Exists(p => p.Category.Id == ((Category)lbCategories.SelectedItem).Id))
                 {
                     DataAccess.DeleteCategory((Category)lbCategories.SelectedItem);
@@ -51,12 +46,12 @@ namespace V2_myPrivateFinance.Views
                 }
                 else
                 {
-                    MessageBox.Show("Can't delete used Category");
+                    MessageBox.Show("Can't delete used category");
                 }
             }
             else
             {
-                MessageBox.Show("No Category selected");
+                MessageBox.Show("No category selected");
             }
         }
     }

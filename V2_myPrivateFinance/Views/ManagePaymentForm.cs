@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using V2_myPrivateFinance.Models;
 
@@ -11,20 +8,20 @@ namespace V2_myPrivateFinance.Views
 {
     public partial class ManagePaymentForm : BaseForm
     {
-        BindingList<Category> categories = new BindingList<Category>();
+        List<Category> categories = new List<Category>();
         Payment payment = new Payment();
 
         public ManagePaymentForm()
         {
             InitializeComponent();
-            FillCmbCategory();
+            FillCmbCategoryAndDate();
         }
 
         public ManagePaymentForm(Payment p)
         {
             payment = p;
             InitializeComponent();
-            FillCmbCategory();
+            FillCmbCategoryAndDate();
             FillDialog();
         }
 
@@ -36,8 +33,9 @@ namespace V2_myPrivateFinance.Views
             cmbCategory.SelectedIndex = cmbCategory.FindStringExact(payment.Category.Name);
         }
 
-        public void FillCmbCategory()
+        public void FillCmbCategoryAndDate()
         {
+            dtpDate.Value = DateTime.Now;
             categories = DataAccess.GetCategories();
             foreach (Category c in categories)
             {

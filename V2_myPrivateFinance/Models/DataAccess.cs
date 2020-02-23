@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace V2_myPrivateFinance.Models
@@ -16,7 +13,7 @@ namespace V2_myPrivateFinance.Models
         {
             try
             {
-                string conString = "server=localhost;Database=privatefinance;Trusted_Connection=yes;";
+                string conString = ConfigurationManager.ConnectionStrings["Db"].ConnectionString;
                 con = new SqlConnection(conString);
                 con.Open();
             }
@@ -43,9 +40,9 @@ namespace V2_myPrivateFinance.Models
             return rdr;
         }
 
-        public static BindingList<Category> GetCategories()
+        public static List<Category> GetCategories()
         {
-            BindingList<Category> categories = new BindingList<Category>();
+            List<Category> categories = new List<Category>();
             SqlDataReader rdr = GetDataReader("SELECT * FROM Categories");
             if (rdr.HasRows)
             {
@@ -61,10 +58,10 @@ namespace V2_myPrivateFinance.Models
             return categories;
         }
 
-        public static BindingList<Payment> GetPayments()
+        public static List<Payment> GetPayments()
         {
-            BindingList<Payment> payments = new BindingList<Payment>();
-            BindingList<Category> categories = GetCategories();
+            List<Payment> payments = new List<Payment>();
+            List<Category> categories = GetCategories();
             SqlDataReader rdr = GetDataReader("SELECT * FROM Payments");
             if (rdr.HasRows)
             {
@@ -76,30 +73,12 @@ namespace V2_myPrivateFinance.Models
                     p.Date = rdr.GetDateTime(2);
                     p.Amount = rdr.GetDouble(3);
                     p.IsIncome = rdr.GetBoolean(4);
-                    p.Category = new List<Category>(categories).Find(c => c.Id == rdr.GetInt32(5));
+                    p.Category = categories.Find(c => c.Id == rdr.GetInt32(5));
                     payments.Add(p);
                 }
             }
             rdr.Close();
             return payments;
-        }
-
-        public static double GetPaymentSum()
-        {
-            double sum = 0.00;
-            List<Payment> payments = new List<Payment>(GetPayments());
-            foreach (var p in payments)
-            {
-                if (p.IsIncome)
-                {
-                    sum += p.Amount;
-                }
-                else
-                {
-                    sum -= p.Amount;
-                }
-            }
-            return sum;
         }
 
         public static void AddPayment(Payment p)
@@ -174,6 +153,53 @@ namespace V2_myPrivateFinance.Models
             {
                 MessageBox.Show(e.Message);
             }
+        }
+
+        public static double GetPaymentSum()
+        {
+            double sum = 0.00;
+            List<Payment> payments = GetPayments();
+            foreach (var p in payments)
+            {
+                if (p.IsIncome)
+                {
+                    sum += p.Amount;
+                }
+                else
+                {
+                    sum -= p.Amount;
+                }
+            }
+            return sum;
+        }
+
+        public static List<Payment> GetPaymentsByMothYear(DateTime dt)
+        {
+            CheckConnection();
+            List<Payment> payments = new List<Payment>();
+            List<Category> categories = new List<Category>();
+            string query = "SELECT * FROM Payments WHERE MONTH(Date)=MONTH(@M) AND YEAR(Date)=YEAR(@M)";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@M", dt);
+            SqlDataReader rdr = cmd.ExecuteReader();
+            if (rdr.HasRows)
+            {
+                while (rdr.Read())
+                {
+                    Payment p = new Payment()
+                    {
+                        Id = rdr.GetInt32(0),
+                        Description = rdr[1].ToString(),
+                        Date = rdr.GetDateTime(2),
+                        Amount = rdr.GetDouble(3),
+                        IsIncome = rdr.GetBoolean(4),
+                        Category = categories.Find(c => c.Id == rdr.GetInt32(5))
+                    };
+                    payments.Add(p);
+                }
+            }
+            rdr.Close();
+            return payments;
         }
     }
 }

@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using V2_myPrivateFinance.Models;
 using V2_myPrivateFinance.Views;
@@ -14,7 +8,7 @@ namespace V2_myPrivateFinance
 {
     public partial class Payments : BaseForm
     {
-        BindingList<Payment> payments = new BindingList<Payment>();
+        List<Payment> payments = new List<Payment>();
         public Payments()
         {
             InitializeComponent();
@@ -77,7 +71,7 @@ namespace V2_myPrivateFinance
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 Payment payment = payments[dataGridView1.SelectedRows[0].Index];
-                if (MessageBox.Show("Are you shure?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                if (MessageBox.Show("Are you sure?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                 {
                     DataAccess.DeletePayment(payment);
                     RefreshBindings();

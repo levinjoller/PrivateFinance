@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using V2_myPrivateFinance.Models;
 
 namespace V2_myPrivateFinance.Views
 {
-    public partial class StatisticsForm : V2_myPrivateFinance.Views.BaseForm
+    public partial class StatisticsForm : BaseForm
     {
         public StatisticsForm()
         {
@@ -23,7 +18,7 @@ namespace V2_myPrivateFinance.Views
             DateTime second = DateTime.Now.AddMonths(-1);
             DateTime current = DateTime.Now;
 
-            BindingList<Chart> chart = new BindingList<Chart>()
+            List<Chart> chart = new List<Chart>()
                 {GetPillarAtMonthYear(first), GetPillarAtMonthYear(second), GetPillarAtMonthYear(current)};
             chartPayments.DataSource = chart;
             chartPayments.Series["Income"].YValueMembers = "TotalIncome";
@@ -34,8 +29,7 @@ namespace V2_myPrivateFinance.Views
         public Chart GetPillarAtMonthYear(DateTime dt)
         {
             Chart chart = new Chart();
-            List<Payment> payments = new List<Payment>(DataAccess.GetPayments());
-            payments.FindAll(p => p.Date.ToString("MM-yy") == dt.ToString("MM-yy")).ForEach(p =>
+            DataAccess.GetPaymentsByMothYear(dt).ForEach(p =>
                 {
                     _ = p.IsIncome ? chart.TotalIncome += p.Amount : chart.TotalExpense += p.Amount;
                 });

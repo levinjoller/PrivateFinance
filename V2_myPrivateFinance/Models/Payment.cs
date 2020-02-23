@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace V2_myPrivateFinance.Models
 {
@@ -20,8 +16,8 @@ namespace V2_myPrivateFinance.Models
 
         public string Export()
         {
-            string d = Description.Replace("\"", "\"\"");
-            string c = Category.Name.Replace("\"", "\"\"");
+            string d = $"\"{Description.Replace("\"", "\"\"")}\"";
+            string c = $"\"{Category.Name.Replace("\"", "\"\"")}\"";
             return $"{Id}, {c}, {d}, {Date.ToShortDateString()}, {(IsIncome ? Amount : Amount * -1).ToString("F2").Replace(",", ".")}";
         }
     }
