@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using V2_myPrivateFinance.Models;
+using MyPrivateFinance.Models;
 
-namespace V2_myPrivateFinance.Views
+namespace MyPrivateFinance.Views
 {
     public partial class StatisticsForm : BaseForm
     {

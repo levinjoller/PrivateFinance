@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace V2_myPrivateFinance.Views
+namespace MyPrivateFinance.Views
 {
     partial class AboutForm : Form
     {

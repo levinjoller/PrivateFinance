@@ -1,4 +1,4 @@
-﻿namespace V2_myPrivateFinance.Views
+﻿namespace MyPrivateFinance.Views
 {
     partial class ManageCategoy
     {

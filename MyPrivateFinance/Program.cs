@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using V2_myPrivateFinance.Models;
+using MyPrivateFinance.Models;
 
-namespace V2_myPrivateFinance
+namespace MyPrivateFinance
 {
     static class Program
     {

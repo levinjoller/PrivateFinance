@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
-namespace V2_myPrivateFinance.Models
+namespace MyPrivateFinance.Models
 {
     public static class DataAccess
     {

@@ -1,4 +1,4 @@
-﻿namespace V2_myPrivateFinance
+﻿namespace MyPrivateFinance
 {
     partial class Payments
     {

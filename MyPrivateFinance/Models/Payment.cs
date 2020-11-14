@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace V2_myPrivateFinance.Models
+namespace MyPrivateFinance.Models
 {
     public class Payment
     {

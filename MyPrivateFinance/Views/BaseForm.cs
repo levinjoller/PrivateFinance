@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace V2_myPrivateFinance.Views
+namespace MyPrivateFinance.Views
 {
     public partial class BaseForm : Form
     {

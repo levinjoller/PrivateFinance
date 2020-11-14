@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using V2_myPrivateFinance.Models;
+using MyPrivateFinance.Models;
 
-namespace V2_myPrivateFinance.Views
+namespace MyPrivateFinance.Views
 {
     public partial class ManagePaymentForm : BaseForm
     {
