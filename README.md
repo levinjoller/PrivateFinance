@@ -8,8 +8,7 @@ All data is persisted in the local MSSQL database.
 ***
 
 ## Installation
-Insert the database backup into your local MSSQL server.\
-NOTE: SQL file is comming soon.
+Insert the database backup (./db/DB-PrivateFinance.sql) into your local MSSQL server.
 ***
 
 ## Author
